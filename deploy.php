@@ -8,7 +8,7 @@ function slack($message) {
 				$data = http_build_query([
 					"token" => SLACK_ACCESS_TOKEN,
 					"channel" => SLACK_CHANNEL, 
-					"text" => $message, /
+					"text" => $message, 
 					"username" => SLACK_BOT_NAME,
 					]);
 				curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'POST');
