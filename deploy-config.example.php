@@ -21,6 +21,12 @@
  */
 define('SECRET_ACCESS_TOKEN', 'BetterChangeMeNowOrSufferTheConsequences');
 
+define('SLACK_ACCESS_TOKEN',"slack_access_token");
+
+define('SLACK_CHANNEL','#channel');
+
+define('SLACK_BOT_NAME',"DeployBot");
+
 /**
  * The address of the remote Git repository that contains the code that's being
  * deployed.

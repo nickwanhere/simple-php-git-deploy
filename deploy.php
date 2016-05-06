@@ -1,4 +1,27 @@
 <?php
+
+function slack($message) {
+
+			if (!defined('SLACK_ACCESS_TOKEN'))
+			{
+				$ch = curl_init("https://slack.com/api/chat.postMessage");
+				$data = http_build_query([
+					"token" => SLACK_ACCESS_TOKEN,
+					"channel" => SLACK_CHANNEL, 
+					"text" => $message, /
+					"username" => SLACK_BOT_NAME,
+					]);
+				curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'POST');
+				curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+				curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+				curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+				$result = curl_exec($ch);
+				curl_close($ch);
+				return $result;
+
+			}
+}
+
 /**
  * Simple PHP Git deploy script
  *
@@ -390,9 +413,15 @@ Cleaning up temporary files ...
 			$headers[] = sprintf('X-Mailer: PHP/%s', phpversion());
 			mail(EMAIL_ON_ERROR, $error, strip_tags(trim($output)), implode("\r\n", $headers));
 		}
+		else
+		{
+
+		   slack($error);
+		}
 		break;
 	}
 }
+slack('Deploy success to '.$_SERVER['SERVER_NAME']);
 ?>
 
 Done.
